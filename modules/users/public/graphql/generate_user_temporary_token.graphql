@@ -1,6 +1,8 @@
-query generate_user_temporary_token($email: String) {
-  user(email: $email) {
-    id
-    temporary_token(valid_for: 24)
+query lost_password_generate_user_temporary_token($email: String) {
+  user: users(per_page: 1, filter: {email: {value: $email}, deleted_at: {exists: false}}) {
+    results {
+      temporary_token(valid_for: 24)
+      id
+    }
   }
 }
